@@ -562,7 +562,7 @@ void CDockWidgetTab::contextMenuEvent(QContextMenuEvent* ev)
 	Action->setEnabled(isClosable());
 	if (d->DockArea->openDockWidgetsCount() > 1)
 	{
-		Action = Menu.addAction(tr("Close Others"), this, SIGNAL(closeOtherTabsRequested()));
+		// Action = Menu.addAction(tr("Close Others"), this, SIGNAL(closeOtherTabsRequested()));
 	}
 	Menu.exec(ev->globalPos());
 }

@@ -921,7 +921,10 @@ void CFloatingDockContainer::closeEvent(QCloseEvent *event)
 	ADS_PRINT("CFloatingDockContainer closeEvent");
 	d->setState(DraggingInactive);
 	event->ignore();
-	if (!isClosable())
+    const bool closable = isClosable();
+    if (!closable
+        && !d->DockContainer->features().testFlag(
+            CDockWidget::CustomCloseHandling))
 	{
 		return;
 	}
@@ -937,13 +940,13 @@ void CFloatingDockContainer::closeEvent(QCloseEvent *event)
 				HasOpenDockWidgets = true;
 			}
 		}
-		else
+        else if (closable)
 		{
 			DockWidget->toggleView(false);
 		}
 	}
 
-	if (HasOpenDockWidgets)
+	if (HasOpenDockWidgets || !closable)
 	{
 		return;
 	}
